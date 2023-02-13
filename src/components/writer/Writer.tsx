@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import useWriter from "../../hooks/useWriter";
-import { WORDS_PER_PAGE } from "../utils/constants";
+import Letter from "../../models/Letter";
+import Word from "../../models/Word";
+
+import { WORDS_PER_PAGE } from "../../utils/constants";
 
 import styles from "./Writer.module.scss";
 
-type Props = {
+interface IWriterProps {
 	words: any[];
 	wordIndex: number;
 	letterIndex: number;
@@ -14,9 +17,9 @@ type Props = {
 
 	timerIsStarted: boolean;
 	setTimerIsStarted: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
-const Writer = (props: Props) => {
+const Writer = (props: IWriterProps) => {
 	const { words, wordIndex, letterIndex } = props;
 	const { handleKeyUp, handleKeyDown } = props;
 
@@ -52,9 +55,9 @@ const Writer = (props: Props) => {
 							wordsPageNumber * WORDS_PER_PAGE,
 							wordsPageNumber * WORDS_PER_PAGE + WORDS_PER_PAGE
 						)
-						.map((word: string[], wi: number) => (
+						.map((word: Word, wi: number) => (
 							<div key={wi} className={styles.word}>
-								{word.map((letter: any, li) => (
+								{word.letters.map((letter: Letter, li) => (
 									<>
 										{wi === wordIndex &&
 											li === letterIndex && (
@@ -66,7 +69,7 @@ const Writer = (props: Props) => {
 										<div
 											key={li}
 											className={`${styles.letter} ${
-												styles[letter.value]
+												styles[letter.color]
 											}`}
 										>
 											{letter.key}

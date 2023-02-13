@@ -3,9 +3,9 @@ import Key from "../key/Key";
 
 import styles from "./Keyboard.module.scss";
 
-type Props = {};
+interface IKeyboardProps {}
 
-const Keyboard = (props: Props) => {
+const Keyboard = (props: IKeyboardProps) => {
 	const [pressedKeys, setPressedKeys] = useState<string[]>([]);
 
 	const handleKeyUp = (e: KeyboardEvent): void => {

@@ -2,9 +2,9 @@ import React from "react";
 
 import styles from "./Header.module.scss";
 
-type Props = {};
+interface IHeaderProps {}
 
-const Header = (props: Props) => {
+const Header = (props: IHeaderProps) => {
 	return (
 		<div className={styles.header}>
 			<span>typeR</span>

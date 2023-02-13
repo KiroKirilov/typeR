@@ -2,12 +2,12 @@ import React from "react";
 
 import styles from "./Key.module.scss";
 
-type Props = {
+interface IKeyProps {
 	letter: string;
 	pressedKeys: string[];
-};
+}
 
-const Key = (props: Props) => {
+const Key = (props: IKeyProps) => {
 	const { letter, pressedKeys } = props;
 
 	return (

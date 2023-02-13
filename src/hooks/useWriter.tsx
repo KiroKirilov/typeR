@@ -1,4 +1,7 @@
 import { useState } from "react";
+import LetterColor from "../enums/LetterColor";
+import Letter from "../models/Letter";
+import Word from "../models/Word";
 
 const useWriter = (
 	timerIsStarted: boolean,
@@ -8,20 +11,20 @@ const useWriter = (
 	const [charsTyped, setCharsTyped] = useState<number>(0);
 	const [shiftIsPressed, setShiftIsPressed] = useState<boolean>(false);
 
-	const [words, setWords] = useState<any[]>([]);
+	const [words, setWords] = useState<Word[]>([]);
 
 	const [wordIndex, setWordIndex] = useState<number>(0);
 	const [letterIndex, setLetterIndex] = useState<number>(0);
 
 	const updateLetterColor = (
-		color: string,
+		color: LetterColor,
 		index: number = letterIndex
 	): void => {
-		setWords((prev: any) => {
-			const newWords = [...prev];
-			newWords[wordIndex][index] = {
-				...newWords[wordIndex][index],
-				value: color,
+		setWords((prev: Word[]) => {
+			const newWords: Word[] = [...prev];
+			newWords[wordIndex].letters[index] = {
+				...newWords[wordIndex].letters[index],
+				color: color,
 			};
 
 			return newWords;
@@ -30,7 +33,7 @@ const useWriter = (
 
 	const deleteLetter = (): void => {
 		if (letterIndex === 0 && wordIndex != 0) {
-			const newLetterIndex = words[wordIndex - 1].length;
+			const newLetterIndex = words[wordIndex - 1]?.letters?.length;
 			setLetterIndex(newLetterIndex);
 
 			setWordIndex((prev: number) => {
@@ -44,7 +47,7 @@ const useWriter = (
 			return prev.substring(0, prev.length - 1);
 		});
 
-		updateLetterColor("gray", letterIndex - 1);
+		updateLetterColor(LetterColor.Gray, letterIndex - 1);
 
 		setLetterIndex((prev: number) => {
 			return Math.max(prev - 1, 0);
@@ -54,9 +57,9 @@ const useWriter = (
 	const moveToNextWord = (): void => {
 		setWords((prev) => {
 			const newWords = [...prev];
-			newWords[wordIndex].map((l: any) => {
-				if (l.value === "gray") {
-					l.value = "red";
+			newWords[wordIndex]?.letters?.map((l: any) => {
+				if (l.color === LetterColor.Gray) {
+					l.value = LetterColor.Red;
 				}
 
 				return l;
@@ -70,6 +73,10 @@ const useWriter = (
 	};
 
 	const inputLetter = (pressedKey: string): void => {
+		if (letterIndex >= words[wordIndex].letters.length) {
+			return;
+		}
+
 		if (shiftIsPressed) {
 			pressedKey = pressedKey.toUpperCase();
 		}
@@ -78,13 +85,16 @@ const useWriter = (
 
 		setWrittenText((prev: string) => {
 			const newWrittenText: string = prev + pressedKey;
-			return newWrittenText.substring(0, words[wordIndex].length);
+			return newWrittenText.substring(
+				0,
+				words[wordIndex]?.letters?.length
+			);
 		});
 
-		if (words[wordIndex][letterIndex].key === pressedKey) {
-			updateLetterColor("green");
+		if (words[wordIndex]?.letters[letterIndex]?.key === pressedKey) {
+			updateLetterColor(LetterColor.Green);
 		} else {
-			updateLetterColor("red");
+			updateLetterColor(LetterColor.Red);
 		}
 
 		setLetterIndex((prev: number) => prev + 1);

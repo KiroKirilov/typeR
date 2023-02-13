@@ -1,8 +1,8 @@
 import React from "react";
 
-type Props = {};
+interface IResultsSectionProps {}
 
-const ResultsSection = (props: Props) => {
+const ResultsSection = (props: IResultsSectionProps) => {
 	return <div>ResultsSection</div>;
 };
 
