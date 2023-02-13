@@ -11,4 +11,14 @@
 
 	text-align: center;
 	background: #1c1c1c;
+
+	user-select: none;
+
+	span {
+		transition-duration: 0.2s;
+
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
 }

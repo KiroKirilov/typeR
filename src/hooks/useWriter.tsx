@@ -8,15 +8,7 @@ const useWriter = (
 	const [charsTyped, setCharsTyped] = useState<number>(0);
 	const [shiftIsPressed, setShiftIsPressed] = useState<boolean>(false);
 
-	const exampleWords: string =
-		"The sun was shining brightly on the small town of Millfield. People were out and about, enjoying the beautiful weather. Children were playing in the park, while others were sitting on the benches, soaking up the sun. The air was filled with the sound of laughter and chatter, and the sweet smell of freshly cut grass. As the day went on, the town buzzed with activity and energy, a testament to the joy that comes from living in such a tight-knit community.";
-	const [words, setWords] = useState<any[]>(
-		exampleWords.split(" ").map((w) => {
-			return w.split("").map((l) => {
-				return { key: l, value: "gray" };
-			});
-		})
-	);
+	const [words, setWords] = useState<any[]>([]);
 
 	const [wordIndex, setWordIndex] = useState<number>(0);
 	const [letterIndex, setLetterIndex] = useState<number>(0);
@@ -134,7 +126,14 @@ const useWriter = (
 		}
 	};
 
-	return { words, wordIndex, letterIndex, handleKeyUp, handleKeyDown };
+	return {
+		words,
+		setWords,
+		wordIndex,
+		letterIndex,
+		handleKeyUp,
+		handleKeyDown,
+	};
 };
 
 export default useWriter;

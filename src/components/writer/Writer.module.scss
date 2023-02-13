@@ -16,9 +16,14 @@
 		gap: 10px;
 		user-select: none;
 
+		height: 190px;
+		overflow: hidden;
+
+		animation: fadeIn 0.3s ease-in;
+
 		.word {
 			display: flex;
-			font-size: 20px;
+			font-size: 25px;
 
 			.cursor {
 				display: inline-block;
@@ -29,7 +34,7 @@
 
 				-webkit-animation: blink 1s infinite;
 				width: 1px;
-				height: 20px;
+				height: 25px;
 				margin-right: -1px;
 
 				@-webkit-keyframes blink {
@@ -59,5 +64,15 @@
 				}
 			}
 		}
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 100;
 	}
 }

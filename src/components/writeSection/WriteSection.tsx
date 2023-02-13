@@ -1,5 +1,6 @@
 import React, { KeyboardEvent, useEffect, useState } from "react";
-import useWriter from "../../hoods/useWriter";
+import WordsHelper from "../../helpers/WordsHelper";
+import useWriter from "../../hooks/useWriter";
 import Keyboard from "../keyboard/Keyboard";
 import ResultsSection from "../resultsSection/ResultsSection";
 import Timer from "../timer/Timer";
@@ -15,9 +16,19 @@ const WriteSection = (props: Props) => {
 
 	const [timerTime, setTimerTime] = useState<number>(30);
 
-	const { words, wordIndex, letterIndex, handleKeyUp, handleKeyDown } =
-		useWriter(timerIsStarted, setTimerIsStarted);
+	const {
+		words,
+		setWords,
+		wordIndex,
+		letterIndex,
+		handleKeyUp,
+		handleKeyDown,
+	} = useWriter(timerIsStarted, setTimerIsStarted);
 
+	useEffect(() => {
+		const generatedWords: any[] = WordsHelper.getRandomWords();
+		setWords(generatedWords);
+	}, []);
 	return (
 		<>
 			{!timerIsDone && (
